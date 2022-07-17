@@ -6,6 +6,8 @@ declare global {
       NEXT_PUBLIC_GOOGLE_CLIENT_ID: string;
       NEXT_PUBLIC_GOOGLE_DRIVE_DEVELOPER_KEY: string;
       GOOGLE_CLIENT_SECRET: string;
+
+      NEXT_PUBLIC_PRODUCTION_URL: string;
     }
   }
 }
