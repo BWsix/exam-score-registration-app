@@ -16,7 +16,13 @@ function App(props: AppProps) {
   return (
     <>
       <Head>
-        <title>Page title</title>
+        <title>成績登記web app</title>
+        <meta name="title" content="成績登記web app" />
+        <meta
+          name="description"
+          content="使用成績登記web app登記成績，將成績儲存至google試算表。"
+        />
+
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
