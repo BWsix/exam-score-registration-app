@@ -1,4 +1,11 @@
-import { Button, Group, Input, Select, TextInput } from "@mantine/core";
+import {
+  Button,
+  Group,
+  Input,
+  LoadingOverlay,
+  Select,
+  TextInput,
+} from "@mantine/core";
 import { useForm, zodResolver } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import { trpc } from "utils/trpc";
@@ -129,43 +136,47 @@ export function AddExamForm(props: Props) {
         });
       })}
     >
-      <TextInput
-        required
-        label="考試名稱"
-        {...form.getInputProps("examName")}
-      />
+      <div style={{ position: "relative" }}>
+        <LoadingOverlay visible={addExamMutation.isLoading} />
 
-      <Input.Wrapper label="成績">{fields}</Input.Wrapper>
-      {shouldDisplayNewScoreButton() && (
+        <TextInput
+          required
+          label="考試名稱"
+          {...form.getInputProps("examName")}
+        />
+
+        <Input.Wrapper label="成績">{fields}</Input.Wrapper>
+        {shouldDisplayNewScoreButton() && (
+          <Button
+            onClick={() => {
+              handleScoreArray();
+              form.insertListItem("scoreArray", {
+                studentNumber: "",
+                score: "",
+              });
+            }}
+          >
+            新增一行
+          </Button>
+        )}
+
+        <Select
+          required
+          label="選擇試算表分頁"
+          data={tabSelectValues}
+          error={form.errors.sheetId}
+          {...form.getInputProps("sheetId")}
+        />
+
         <Button
-          onClick={() => {
-            handleScoreArray();
-            form.insertListItem("scoreArray", {
-              studentNumber: "",
-              score: "",
-            });
-          }}
+          type="submit"
+          mt="sm"
+          fullWidth
+          onClick={() => handleScoreArray()}
         >
-          新增一行
+          送出成績
         </Button>
-      )}
-
-      <Select
-        required
-        label="選擇試算表分頁"
-        data={tabSelectValues}
-        error={form.errors.sheetId}
-        {...form.getInputProps("sheetId")}
-      />
-
-      <Button
-        type="submit"
-        mt="sm"
-        fullWidth
-        onClick={() => handleScoreArray()}
-      >
-        送出成績
-      </Button>
+      </div>
     </form>
   );
 }
